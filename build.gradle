@@ -1,0 +1,44 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.bmuschko:gradle-docker-plugin:2.6.7'
+    }
+}
+
+repositories {
+    jcenter()
+}
+
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.DockerPullImage
+
+apply plugin: 'com.bmuschko.docker-remote-api'
+
+docker {
+    if (System.env.DOCKER_HOST) {
+        url = "$System.env.DOCKER_HOST".replace("tcp","http")
+    }
+    else {
+        url = 'unix:///var/run/docker.sock'
+    }
+}
+
+task updateUpstreamJenkinsImage(type: DockerPullImage) {
+    repository = 'jenkins'
+    tag = 'latest'
+}
+
+task buildImage(type: DockerBuildImage) {
+    dependsOn updateUpstreamJenkinsImage
+    inputDir = file('.')
+    tag = 'mkoch/jenkins'
+    noCache = true
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.12'
+}
+
