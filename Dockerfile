@@ -1,4 +1,4 @@
-FROM base:latest
+FROM mkoch/base:latest
 
 MAINTAINER Michael Koch <michael.koch@enough.de>
 

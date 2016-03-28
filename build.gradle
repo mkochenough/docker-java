@@ -13,7 +13,6 @@ repositories {
 }
 
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
-import com.bmuschko.gradle.docker.tasks.image.DockerPullImage
 
 apply plugin: 'com.bmuschko.docker-remote-api'
 
