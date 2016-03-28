@@ -26,15 +26,9 @@ docker {
     }
 }
 
-task updateUpstreamJenkinsImage(type: DockerPullImage) {
-    repository = 'jenkins'
-    tag = 'latest'
-}
-
 task buildImage(type: DockerBuildImage) {
-    dependsOn updateUpstreamJenkinsImage
     inputDir = file('.')
-    tag = 'mkoch/jenkins'
+    tag = 'mkoch/java'
     noCache = true
 }
 
